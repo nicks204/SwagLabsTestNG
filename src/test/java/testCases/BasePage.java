@@ -17,20 +17,18 @@ public class BasePage {
 	@BeforeMethod
 	public void browserLaunch() throws MalformedURLException {
 
-		driver = new ChromeDriver();
+		WebDriverManager.chromedriver().setup();
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--no-sandbox"); 
+			options.addArguments("--disable-dev-shm-using") ;
+			options.addArguments("--window-size=1920,1080");
+			options.addArguments("--headless") ;
+			driver = new ChromeDriver(options);
+		
 		driver.get("https://www.saucedemo.com/v1/");
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(3000, TimeUnit.MILLISECONDS);
 		
-		ChromeOptions options = new ChromeOptions();
-			options.addArguments("--no-sandbox"); 
-			options.addArguments("--disable-dev-shm-usage") ;
-			options.addArguments("--window-size=1920,1080");
-			options.addArguments("--headless");
-			options.addArguments("--ignore-ssl-errors=yes");
-			options.addArguments("--ignore-certificate-errors");
-			driver = new ChromeDriver(options);
-
 
 	}
 
